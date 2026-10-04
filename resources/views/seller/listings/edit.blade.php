@@ -1,0 +1,154 @@
+<x-app-layout>
+<x-slot name="title">Edit Listing</x-slot>
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <div class="mb-6">
+        <a href="{{ route('seller.listings.index') }}"
+           class="text-sm text-brand-600 hover:text-brand-700 font-semibold">← Back to listings</a>
+        <h1 class="text-2xl font-bold text-gray-900 mt-2">Edit Listing</h1>
+    </div>
+
+    <form method="POST" action="{{ route('seller.listings.update', $listing) }}"
+          enctype="multipart/form-data" class="space-y-6">
+        @csrf @method('PUT')
+
+        {{-- Basic Info --}}
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="font-bold text-gray-900 mb-4">Basic Info</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Title</label>
+                    <input type="text" name="title" value="{{ old('title', $listing->title) }}"
+                           class="w-full px-4 py-2.5 text-sm border rounded-xl outline-none
+                                  {{ $errors->has('title') ? 'border-red-400' : 'border-gray-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-100' }}">
+                    @error('title')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Description</label>
+                    <textarea name="description" rows="5"
+                        class="w-full px-4 py-2.5 text-sm border rounded-xl outline-none resize-none
+                               {{ $errors->has('description') ? 'border-red-400' : 'border-gray-300 focus:border-brand-500' }}">{{ old('description', $listing->description) }}</textarea>
+                    @error('description')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Category</label>
+                        <select name="category_id"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-brand-500">
+                            @foreach($categories as $parent)
+                                <optgroup label="{{ $parent->name }}">
+                                    @foreach($parent->children as $child)
+                                        <option value="{{ $child->id }}"
+                                            {{ old('category_id', $listing->category_id) == $child->id ? 'selected' : '' }}>
+                                            {{ $child->name }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Condition</label>
+                        <select name="condition"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-brand-500">
+                            @foreach(['new' => 'New', 'like_new' => 'Like New', 'good' => 'Good', 'fair' => 'Fair'] as $val => $label)
+                                <option value="{{ $val }}"
+                                    {{ old('condition', $listing->condition) === $val ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Price ($)</label>
+                        <input type="number" name="price" value="{{ old('price', $listing->price) }}"
+                               min="1" step="0.01"
+                               class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-brand-500">
+                        @error('price')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Quantity</label>
+                        <input type="number" name="quantity" value="{{ old('quantity', $listing->quantity) }}"
+                               min="1"
+                               class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-brand-500">
+                        @error('quantity')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Location</label>
+                        <input type="text" name="location" value="{{ old('location', $listing->location) }}"
+                               class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-brand-500">
+                        @error('location')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Status</label>
+                        <select name="status"
+                            class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl outline-none focus:border-brand-500">
+                            @foreach(['draft' => 'Draft', 'active' => 'Active', 'paused' => 'Paused'] as $val => $label)
+                                <option value="{{ $val }}"
+                                    {{ old('status', $listing->status) === $val ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Existing Images --}}
+        @if($listing->images->count())
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="font-bold text-gray-900 mb-4">Current Images</h2>
+            <div class="flex flex-wrap gap-3">
+                @foreach($listing->images as $image)
+                <div class="relative">
+                    <img src="{{ Storage::url($image->path) }}"
+                         class="w-24 h-24 object-cover rounded-xl border border-gray-200">
+                    <form method="POST"
+                          action="{{ route('seller.listings.images.destroy', [$listing, $image]) }}"
+                          onsubmit="return confirm('Remove this image?')">
+                        @csrf @method('DELETE')
+                        <button type="submit"
+                            class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full
+                                   flex items-center justify-center text-xs hover:bg-red-600 transition-colors">
+                            ×
+                        </button>
+                    </form>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
+
+        {{-- Add New Images --}}
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="font-bold text-gray-900 mb-1">Add More Images</h2>
+            <p class="text-xs text-gray-500 mb-4">JPG, PNG, WEBP. Max 5MB each.</p>
+            <input type="file" name="images[]" multiple accept="image/jpg,image/jpeg,image/png,image/webp"
+                   onchange="previewImages(this, 'new-image-preview')"
+                   class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl
+                          file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700
+                          hover:file:bg-brand-100 cursor-pointer">
+            <div id="new-image-preview" class="flex flex-wrap gap-3 mt-4"></div>
+        </div>
+
+        {{-- Submit --}}
+        <div class="flex items-center gap-4">
+            <button type="submit"
+                class="bg-brand-600 text-white px-8 py-3 rounded-xl text-sm font-semibold hover:bg-brand-700 transition-colors">
+                Save Changes
+            </button>
+            <a href="{{ route('seller.listings.index') }}"
+               class="text-sm text-gray-600 hover:text-gray-900 font-medium">Cancel</a>
+        </div>
+    </form>
+</div>
+</x-app-layout>
