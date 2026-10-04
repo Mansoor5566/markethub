@@ -1,3 +1,19 @@
+# MarketHub — Laravel 12 Marketplace Platform
+
+**Developer:** Mansoor
+**Framework:** Laravel 12
+**PHP:** 8.3
+**Project Type:** Internee Training Project
+
+## Test Credentials
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@markethub.test | password |
+| Seller | seller@markethub.test | password |
+| Buyer | buyer1@markethub.test | password |
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
