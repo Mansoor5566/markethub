@@ -188,44 +188,6 @@ Use any future expiry date and any 3-digit CVC.
 
 ---
 
-## 📁 Project Structure
-
-markethub/
-├── app/
-│ ├── Http/
-│ │ ├── Controllers/ # All controllers
-│ │ ├── Middleware/ # ActiveUser middleware
-│ │ └── Requests/ # Form request classes
-│ ├── Models/ # Eloquent models
-│ ├── Notifications/ # Email + database notifications
-│ ├── Policies/ # Authorization policies
-│ └── View/Components/ # Blade components
-├── database/
-│ ├── migrations/ # All migrations
-│ └── seeders/ # All seeders
-├── resources/
-│ └── views/
-│ ├── admin/ # Admin panel views
-│ ├── auth/ # Login, register, password reset
-│ ├── checkout/ # Success and cancel pages
-│ ├── components/ # Reusable Blade components
-│ ├── errors/ # 403, 404, 500 pages
-│ ├── favorites/ # Favorites page
-│ ├── home/ # Home page
-│ ├── layouts/ # App and admin layouts
-│ ├── listings/ # Browse and detail pages
-│ ├── messages/ # Inbox and thread
-│ ├── notifications/ # Notifications centre
-│ ├── orders/ # Buyer order pages
-│ ├── profile/ # Profile edit page
-│ ├── search/ # Search results
-│ ├── seller/ # Seller dashboard and pages
-│ └── sellers/ # Public seller profile
-└── routes/
-└── web.php # All application routes
-
-
----
 
 ## 🚫 Constraints (SRS Requirements)
 
