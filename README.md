@@ -1,11 +1,157 @@
 # MarketHub — Laravel 12 Marketplace Platform
 
-**Developer:** Mansoor
-**Framework:** Laravel 12
-**PHP:** 8.3
-**Project Type:** Internee Training Project
+A full-featured online marketplace built with Laravel 12, Tailwind CSS, and Stripe payments.
+Developed as an internee training project.
 
-## Test Credentials
+---
+
+## 👨‍💻 Developer
+
+**Name:** Mansoor  
+**Project:** Internee Training Project  
+**Version:** 1.0  
+**Year:** 2026  
+
+---
+
+## 🚀 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Backend | Laravel 12 (PHP 8.3+) |
+| Frontend | Blade Templates + Vanilla JavaScript |
+| Styling | Tailwind CSS 3 |
+| Auth | Laravel Breeze |
+| Roles | Spatie Laravel Permission |
+| Payments | Stripe PHP SDK v13 (test mode) |
+| Queue | Database Queue Driver |
+| Email | Mailtrap SMTP (sandbox) |
+| Storage | Local Public Disk |
+| Database | MySQL |
+
+---
+
+## ✅ Features
+
+### Buyer
+- Browse and search listings
+- Filter by category, condition, price
+- Sort by newest, price, popularity
+- Purchase via Stripe Checkout
+- View order history and status timeline
+- Leave reviews on completed orders
+- Save listings to favorites
+- Message sellers directly
+- Receive notifications
+
+### Seller
+- Create and manage listings with images
+- Dashboard with revenue stats and charts
+- Manage incoming orders
+- Mark orders as shipped and completed
+- Public profile with reviews and ratings
+
+### Admin
+- Full admin panel with sidebar
+- Manage all users (ban/unban, change roles)
+- Approve and force-delete listings
+- View all platform orders and revenue
+- Delete reviews
+
+---
+
+## 📋 Requirements
+
+- PHP 8.3+
+- Composer 2.x
+- MySQL 8.x
+- Node.js 18+
+- NPM
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Mansoor5566/markethub.git
+cd markethub
+```
+
+### 2. Install dependencies
+
+```bash
+composer install
+npm install
+```
+
+### 3. Environment setup
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. Configure .env
+
+```env
+APP_NAME=MarketHub
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=markethub
+DB_USERNAME=root
+DB_PASSWORD=
+
+SESSION_DRIVER=database
+QUEUE_CONNECTION=database
+FILESYSTEM_DISK=public
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+MAIL_FROM_ADDRESS=noreply@markethub.test
+MAIL_FROM_NAME=MarketHub
+
+STRIPE_KEY=pk_test_your_key
+STRIPE_SECRET=sk_test_your_secret
+STRIPE_WEBHOOK_SECRET=whsec_your_secret
+```
+
+### 5. Database setup
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+### 6. Storage link
+
+```bash
+php artisan storage:link
+```
+
+### 7. Build assets
+
+```bash
+npm run build
+```
+
+### 8. Start the server
+
+```bash
+php artisan serve
+```
+
+Open **http://localhost:8000**
+
+---
+
+## 🔑 Test Credentials
 
 | Role | Email | Password |
 |------|-------|----------|
@@ -13,62 +159,128 @@
 | Seller | seller@markethub.test | password |
 | Buyer | buyer1@markethub.test | password |
 
+---
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 💳 Stripe Test Cards
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+| Card Number | Result |
+|-------------|--------|
+| 4242 4242 4242 4242 | Payment succeeds ✅ |
+| 4000 0000 0000 0002 | Card declined ❌ |
+| 4000 0025 0000 3155 | 3D Secure required |
 
-## About Laravel
+Use any future expiry date and any 3-digit CVC.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🗄️ Database Seeders
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Seeder | Records |
+|--------|---------|
+| RolesAndPermissionsSeeder | 3 roles, 4 permissions |
+| UserSeeder | 26 users (1 admin, 5 sellers, 20 buyers) |
+| CategorySeeder | 40 categories (8 parents, 32 children) |
+| ListingSeeder | 120 listings |
+| OrderSeeder | 60 orders |
+| ReviewSeeder | Up to 45 reviews |
+| MessageSeeder | 80 messages (20 threads) |
+| FavoriteSeeder | 50 favorites |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📁 Project Structure
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+markethub/
+├── app/
+│ ├── Http/
+│ │ ├── Controllers/ # All controllers
+│ │ ├── Middleware/ # ActiveUser middleware
+│ │ └── Requests/ # Form request classes
+│ ├── Models/ # Eloquent models
+│ ├── Notifications/ # Email + database notifications
+│ ├── Policies/ # Authorization policies
+│ └── View/Components/ # Blade components
+├── database/
+│ ├── migrations/ # All migrations
+│ └── seeders/ # All seeders
+├── resources/
+│ └── views/
+│ ├── admin/ # Admin panel views
+│ ├── auth/ # Login, register, password reset
+│ ├── checkout/ # Success and cancel pages
+│ ├── components/ # Reusable Blade components
+│ ├── errors/ # 403, 404, 500 pages
+│ ├── favorites/ # Favorites page
+│ ├── home/ # Home page
+│ ├── layouts/ # App and admin layouts
+│ ├── listings/ # Browse and detail pages
+│ ├── messages/ # Inbox and thread
+│ ├── notifications/ # Notifications centre
+│ ├── orders/ # Buyer order pages
+│ ├── profile/ # Profile edit page
+│ ├── search/ # Search results
+│ ├── seller/ # Seller dashboard and pages
+│ └── sellers/ # Public seller profile
+└── routes/
+└── web.php # All application routes
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🚫 Constraints (SRS Requirements)
 
+- ❌ No Livewire
+- ❌ No Vue.js
+- ❌ No React
+- ❌ No S3 or cloud storage
+- ❌ No hardcoded URLs (all use `route()` helper)
+- ❌ No inline `$request->validate()` (all use Form Request classes)
+- ❌ No manual role checks in controllers (all use Policies)
+- ❌ `.env` file never committed to Git
+
+---
+
+## 🔧 Running in Development
+
+You need 3 terminals running simultaneously:
+
+**Terminal 1 — Laravel Server:**
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+**Terminal 2 — Queue Worker:**
+```bash
+php artisan queue:work
+```
 
-## Contributing
+**Terminal 3 — Stripe Webhook (Windows):**
+```bash
+C:\stripe\stripe.exe listen --forward-to http://localhost:8000/stripe/webhook
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 📧 Email Setup (Mailtrap)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Create free account at https://mailtrap.io
+2. Go to **Email Testing** → **Inboxes**
+3. Click **Show Credentials**
+4. Copy SMTP credentials to `.env`
+5. All emails are captured in Mailtrap inbox — no real emails sent
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🌐 Deployment
 
-## License
+See deployment guide for Railway.app, Render, or shared hosting in the project wiki.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📄 License
+
+This project is for educational purposes only — Internee Training Project 2026.
+
+---
+
+*Built with ❤️ using Laravel 12 · Tailwind CSS · Stripe*
